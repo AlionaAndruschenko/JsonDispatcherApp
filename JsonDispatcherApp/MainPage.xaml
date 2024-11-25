@@ -1,0 +1,102 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JsonDispatcherApp.MainPage"
+             Title="JSON Dispatcher">
+    <VerticalStackLayout Padding="10" Spacing="10">
+
+        <!-- Верхній рядок кнопок -->
+        <HorizontalStackLayout Spacing="10">
+            <Button Text="Завантажити JSON" Clicked="LoadJson_Clicked" />
+            <Button Text="Зберегти JSON" Clicked="SaveJson_Clicked" />
+            <Button Text="Фільтри" Clicked="Filters_Clicked" />
+            <Button Text="Вихід" Clicked="Exit_Clicked" />
+        </HorizontalStackLayout>
+
+        <!-- Поле для пошуку -->
+        <SearchBar x:Name="SearchBar"
+                   Placeholder="Введіть ключове слово для пошуку"
+                   TextChanged="SearchBar_TextChanged" />
+
+        <!-- Таблиця студентів -->
+        <CollectionView x:Name="StudentsGrid"
+                        SelectionMode="Single">
+            <!-- Заголовок таблиці -->
+            <CollectionView.Header>
+                <Grid Padding="5" BackgroundColor="Purple">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Text="ID" Grid.Column="0" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                    <Label Text="ПІБ" Grid.Column="1" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                    <Label Text="Факультет" Grid.Column="2" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                    <Label Text="Спеціальність" Grid.Column="3" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                    <Label Text="Курс" Grid.Column="4" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                    <Label Text="GPA" Grid.Column="5" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                </Grid>
+            </CollectionView.Header>
+
+            <!-- Дані в таблиці -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="{Binding ID}" Grid.Column="0" HorizontalOptions="Center" />
+                        <Label Text="{Binding Name}" Grid.Column="1" />
+                        <Label Text="{Binding Faculty}" Grid.Column="2" />
+                        <Label Text="{Binding Specialty}" Grid.Column="3" />
+                        <Label Text="{Binding Course}" Grid.Column="4" HorizontalOptions="Center" />
+                        <Label Text="{Binding GPA}" Grid.Column="5" HorizontalOptions="Center" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Кнопки для роботи зі студентами -->
+        <HorizontalStackLayout Spacing="10">
+            <Button Text="Додати студента" Clicked="AddStudent_Clicked" />
+            <Button Text="Редагувати студента" Clicked="EditStudent_Clicked" />
+            <Button Text="Видалити студента" Clicked="DeleteStudent_Clicked" />
+        </HorizontalStackLayout>
+
+        <!-- Форма для редагування студента -->
+        <StackLayout x:Name="EditForm" IsVisible="False" Padding="10">
+            <Label Text="Редагувати студента" FontSize="Large" HorizontalOptions="Center" />
+
+            <Entry x:Name="NameEntry" Placeholder="ПІБ" />
+            <Entry x:Name="FacultyEntry" Placeholder="Факультет" />
+            <Entry x:Name="SpecialtyEntry" Placeholder="Спеціальність" />
+            <Entry x:Name="CourseEntry" Placeholder="Курс" Keyboard="Numeric" />
+            <Entry x:Name="GPAEntry" Placeholder="GPA" Keyboard="Numeric" />
+
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Зберегти" Clicked="SaveStudent_Clicked" />
+                <Button Text="Назад" Clicked="BackButton_Clicked" />
+            </HorizontalStackLayout>
+        </StackLayout>
+
+        <!-- Форма для фільтрів -->
+        <StackLayout x:Name="FilterForm" IsVisible="False" Padding="10">
+            <Label Text="Фільтри" FontSize="Large" HorizontalOptions="Center" />
+
+            <Entry x:Name="CourseFilterEntry" Placeholder="Введіть курс" Keyboard="Numeric" />
+            <Entry x:Name="GPAFilterEntry" Placeholder="Введіть мінімальний GPA" Keyboard="Numeric" />
+            <Entry x:Name="FacultyFilterEntry" Placeholder="Введіть факультет" />
+
+            <Button Text="Застосувати фільтри" Clicked="ApplyFilters_Clicked" />
+            <Button Text="Назад" Clicked="BackFromFilters_Clicked" />
+        </StackLayout>
+
+    </VerticalStackLayout>
+</ContentPage>
